@@ -115,16 +115,14 @@ public class PersonaDAO {
         try {
             PreparedStatement consulta = conex.getConnection().prepareStatement("DELETE FROM persona where id = ? ");
             consulta.setInt(1, documento);
+            consulta.executeUpdate();
             ResultSet res = consulta.executeQuery();
 
-            if (res.next()) {
+           if (res.next()) {
                 PersonaVO persona = new PersonaVO();
-                persona.setIdPersona(Integer.parseInt(res.getString("id")));
-                persona.setNombrePersona(res.getString("nombre"));
-                persona.setEdadPersona(Integer.parseInt(res.getString("edad")));
-                persona.setProfesionPersona(res.getString("profesion"));
-                persona.setTelefonoPersona(Integer.parseInt(res.getString("telefono")));
                 miEmpleado.remove(persona);
+
+
             }
             res.close();
             consulta.close();

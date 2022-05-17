@@ -75,7 +75,9 @@ public class Principal {
                 verMenu();
                 break;
             case 4:
-                borrarPersona();
+                int doc1 = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el numero" +
+                        " de documento de la persona que quiere borrar"));
+                borrarPersona(doc1);
                 verMenu();
                 break;
             case 5:
@@ -188,23 +190,16 @@ public class Principal {
         }
     }
 
-    private void borrarPersona() {
+    private void borrarPersona(int documento) {
         miPersonaDAO = new PersonaDAO();
-        PersonaVO miPersona = null;
-        String elementToBeDeleted = JOptionPane.showInputDialog("Id Del elemento que se desea eliminar");
-
-        //Se obtiene la lista de personas
-        ArrayList<PersonaVO> listaPersonas = miPersonaDAO.listaDePersonas();
-        //se valida si se obtubo o no informacion
-        if (listaPersonas.size() > 0) {
-            int numeroPersona = 0;
-            //se recorre la lista de personas asignandose cada posicion en un objeto persona
-            for (int i = 0; i < listaPersonas.size(); i++) {
-                if(miPersona.getIdPersona().equals(elementToBeDeleted)){
-                    listaPersonas.remove(elementToBeDeleted);
-                }
-                //numeroPersona++;
-                //miPersona = listaPersonas.get(i);
+        PersonaVO miPersona;
+        ArrayList<PersonaVO> personasEncontrada = miPersonaDAO.borrarPersona(documento);
+        //se valida que se encuentre la persona
+        if (personasEncontrada.size() > 0) {
+            //se recorre la lista y se asignan los datos al objeto para borrar los valores
+            for (int i = 0; i < personasEncontrada.size(); i++) {
+                miPersona = personasEncontrada.get(i);
+               personasEncontrada.remove(miPersona);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Actualmente no " +
