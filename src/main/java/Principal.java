@@ -72,6 +72,7 @@ public class Principal {
                 break;
             case 3:
                 obtenerRegistros();
+                new Prueba();
                 verMenu();
                 break;
             case 4:
@@ -203,7 +204,7 @@ public class Principal {
             }
         } else {
             JOptionPane.showMessageDialog(null, "Actualmente no " +
-                    "existen registros de personas", "INFORMACIÓN", JOptionPane.INFORMATION_MESSAGE);
+                    "existen registros de personas", " INFORMACIÓN ", JOptionPane.INFORMATION_MESSAGE);
         }
 
     }

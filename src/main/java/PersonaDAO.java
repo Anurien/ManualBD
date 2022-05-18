@@ -121,8 +121,6 @@ public class PersonaDAO {
            if (res.next()) {
                 PersonaVO persona = new PersonaVO();
                 miEmpleado.remove(persona);
-
-
             }
             res.close();
             consulta.close();
