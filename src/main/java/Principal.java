@@ -32,8 +32,9 @@ public class Principal {
         textoMenu += "1. Registrar Persona\n";
         textoMenu += "2. Consultar Persona\n";
         textoMenu += "3. Ver Lista Personas\n";
-        textoMenu += "4. Borrar Persona\n";
-        textoMenu += "5. Salir.\n\n";
+        textoMenu += "4. Actualice Lista Personas\n";
+        textoMenu += "5. Borrar Persona\n";
+        textoMenu += "6. Salir.\n\n";
 
         try {
             int seleccion = Integer.parseInt(JOptionPane.showInputDialog(textoMenu));
@@ -71,17 +72,23 @@ public class Principal {
                 verMenu();
                 break;
             case 3:
-                obtenerRegistros();
                 new Prueba();
+                obtenerRegistros();
                 verMenu();
                 break;
             case 4:
+                int doc2 = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el numero" +
+                        " de documento de la persona que quiere actualizar"));
+                actualizarPersona(doc2);
+                verMenu();
+                break;
+            case 5:
                 int doc1 = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el numero" +
                         " de documento de la persona que quiere borrar"));
                 borrarPersona(doc1);
                 verMenu();
                 break;
-            case 5:
+            case 6:
                 System.exit(0);
                 break;
             default:
@@ -157,7 +164,6 @@ public class Principal {
             JOptionPane.showMessageDialog(null, "Actualmente no " +
                     "existen registros de personas", "INFORMACIÓN", JOptionPane.INFORMATION_MESSAGE);
         }
-
     }
 
     /**
@@ -200,12 +206,38 @@ public class Principal {
             //se recorre la lista y se asignan los datos al objeto para borrar los valores
             for (int i = 0; i < personasEncontrada.size(); i++) {
                 miPersona = personasEncontrada.get(i);
-               personasEncontrada.remove(miPersona);
+                personasEncontrada.remove(miPersona);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Actualmente no " +
                     "existen registros de personas", " INFORMACIÓN ", JOptionPane.INFORMATION_MESSAGE);
         }
+
+    }
+
+    private void actualizarPersona(int documento) {
+        miPersonaDAO = new PersonaDAO();
+        PersonaVO miPersona = new PersonaVO();
+
+        String mensajeIngreso = "Ingrese\n\n";
+
+        String datosSolicitados[] = {"Documento: ","Nombre : ",
+                "Edad: ", "Profesión: ", "Telefono: "};
+        String datosPersona[] = new String[5];
+        for (int i = 0; i < datosSolicitados.length; i++) {
+            //solicita el ingreso del dato y se almacena en el arreglo de datosPersona
+            datosPersona[i] = JOptionPane.showInputDialog(null, mensajeIngreso +
+                    datosSolicitados[i], "Datos Persona", JOptionPane.INFORMATION_MESSAGE);
+
+            System.out.println(datosSolicitados[i] + datosPersona[i]);
+        }
+        miPersona.setIdPersona(Integer.parseInt(datosPersona[0]));
+        miPersona.setNombrePersona(datosPersona[1]);
+        miPersona.setEdadPersona(Integer.parseInt(datosPersona[2]));
+        miPersona.setProfesionPersona(datosPersona[3]);
+        miPersona.setTelefonoPersona(Integer.parseInt(datosPersona[4]));
+
+        miPersonaDAO.actualizaPersona(documento, miPersona);
 
     }
 }

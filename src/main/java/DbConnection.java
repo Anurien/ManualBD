@@ -8,7 +8,7 @@ public class DbConnection {
      */
     static String bd = "manual";
     static String login = "root";
-    static String password = "Castelao21.";
+    static String password = "Nuria21.";
     static String url = "jdbc:mysql://localhost/" + bd;
 
     Connection connection = null;

@@ -20,11 +20,11 @@ public class Prueba {
     private DefaultTableModel modelo;
 
     /**
-     * Crea una instancia de la clase MySQL y realiza todo el código de
+     * Crea una instancia de la clase MySQL y realiza tod0 el código de
      * conexión, consulta y muestra de resultados.
      */
     public Prueba() {
-        // Se mete todo en un try por los posibles errores de MySQL
+        // Se mete tod0 en un try por los posibles errores de MySQL
         try {
             // Se instancian las clases necesarias
             bd = new DbConnection();
@@ -39,8 +39,8 @@ public class Prueba {
             // Bucle infinito, cada segundo se reconsulta la base de datos
             // y se muestran los resultados en pantalla
             while (true) {
-                ResultSet rs = (ResultSet) dao.listaDePersonas();
-                ConversorResultSet.rellena(rs, modelo);
+                ResultSet rs = dao.listaDePersonas1();
+                ConversorResultSetADefaultTableModel.rellena(rs, modelo);
                 tabla.tomaDatos(modelo);
                 Thread.sleep(1000);
             }
@@ -50,35 +50,9 @@ public class Prueba {
     }
 
     public static void rellena(ResultSet rs, DefaultTableModel modelo) {
-        configuraColumnas(rs, modelo);
-        vaciaFilasModelo(modelo);
-        anhadeFilasDeDatos(rs, modelo);
-    }
-
-    /**
-     * Añade al DefaultTableModel las filas correspondientes al ResultSet.
-     *
-     * @param rs     El resultado de la consulta a base de datos
-     * @param modelo El DefaultTableModel que queremos rellenar.
-     */
-    private static void anhadeFilasDeDatos(ArrayList<PersonaVO> rs,
-                                           DefaultTableModel modelo) {
-        int numeroFila = 0;
-        try {
-            // Para cada registro de resultado en la consulta
-            while (rs.next()) {
-                // Se crea y rellena la fila para el modelo de la tabla.
-                Object[] datosFila = new Object[modelo.getColumnCount()];
-                for (int i = 0; i < modelo.getColumnCount(); i++)
-                    datosFila[i] = rs.getObject(i + 1);
-
-                modelo.addRow(datosFila);
-                numeroFila++;
-            }
-            rs.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        ConversorResultSetADefaultTableModel.configuraColumnas(rs, modelo);
+        ConversorResultSetADefaultTableModel.vaciaFilasModelo(modelo);
+        ConversorResultSetADefaultTableModel.anhadeFilasDeDatos(rs, modelo);
     }
 
 }
