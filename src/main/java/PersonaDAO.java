@@ -126,7 +126,7 @@ public class PersonaDAO {
      * @param documento
      * @return
      */
-    public ArrayList<PersonaVO> borrarPersona(int documento) {
+    public void borrarPersona(int documento) {
         ArrayList<PersonaVO> miEmpleado = new ArrayList<PersonaVO>();
         DbConnection conex = new DbConnection();
 
@@ -134,19 +134,21 @@ public class PersonaDAO {
             PreparedStatement consulta = conex.getConnection().prepareStatement("DELETE FROM persona where id = ? ");
             consulta.setInt(1, documento);
             consulta.executeUpdate();
-            ResultSet res = consulta.executeQuery();
+           /* ResultSet res = consulta.executeQuery();
             if (res.next()) {
                 PersonaVO persona = new PersonaVO();
                 miEmpleado.remove(persona);
             }
-            res.close();
+
+            */
+            // res.close();
             consulta.close();
             conex.desconectar();
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "no se pudo borrar la Persona\n" + e);
         }
-        return miEmpleado;
+        //return miEmpleado;
     }
 
     /**

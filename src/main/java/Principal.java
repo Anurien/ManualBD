@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 public class Principal {
     PersonaDAO miPersonaDAO;
+    Interfaz faz = new Interfaz();
 
     /**
      * Método principal, hace el llamado al menú donde se
@@ -56,7 +57,7 @@ public class Principal {
      *
      * @param seleccion
      */
-    private void defineSeleccion(int seleccion) {
+    private void defineSeleccion(int seleccion) throws SQLException {
 
         System.out.println("Selecciona " + seleccion);
 
@@ -72,9 +73,10 @@ public class Principal {
                 verMenu();
                 break;
             case 3:
-                new Prueba();
                 obtenerRegistros();
+                faz.tabla();
                 verMenu();
+
                 break;
             case 4:
                 int doc2 = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el numero" +
@@ -198,20 +200,11 @@ public class Principal {
     }
 
     private void borrarPersona(int documento) {
-        miPersonaDAO = new PersonaDAO();
-        PersonaVO miPersona;
-        ArrayList<PersonaVO> personasEncontrada = miPersonaDAO.borrarPersona(documento);
-        //se valida que se encuentre la persona
-        if (personasEncontrada.size() > 0) {
-            //se recorre la lista y se asignan los datos al objeto para borrar los valores
-            for (int i = 0; i < personasEncontrada.size(); i++) {
-                miPersona = personasEncontrada.get(i);
-                personasEncontrada.remove(miPersona);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Actualmente no " +
-                    "existen registros de personas", " INFORMACIÓN ", JOptionPane.INFORMATION_MESSAGE);
-        }
+        PersonaVO u = new PersonaVO();
+        if (u == null)
+            System.out.println("no se puede eliminar");
+        PersonaDAO daoP = new PersonaDAO();
+        daoP.borrarPersona(documento);
 
     }
 
@@ -221,7 +214,7 @@ public class Principal {
 
         String mensajeIngreso = "Ingrese\n\n";
 
-        String datosSolicitados[] = {"Documento: ","Nombre : ",
+        String datosSolicitados[] = {"Documento: ", "Nombre : ",
                 "Edad: ", "Profesión: ", "Telefono: "};
         String datosPersona[] = new String[5];
         for (int i = 0; i < datosSolicitados.length; i++) {
